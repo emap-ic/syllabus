@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
      função de sort adequada. Ambas as funções irão modificar o
      parâmetro passado mas não retornar nada. A função 'print_array'
      então irá imprimir o array ordenado. */
-  
+
   if(strcmp(argv[1], "b") == 0)
     bubble(numbers, N);
   else
@@ -93,30 +93,39 @@ int main(int argc, char* argv[])
   return 0;
 }
 
-void bubble(int *numbers, int size){
-
-  for(int j = 0; j < size; j++){
-    for(int i = 0; i < size - 1; i++){
-      if(numbers[i] > numbers[i+1]){
+void bubble(int *numbers, int size)
+{
+  bool changed;
+  do
+  {
+    changed = false;
+    for(int i = 0; i < size - 1; i++)
+    {
+      if(numbers[i] > numbers[i+1])
+      {
         int aux = numbers[i];
         numbers[i] = numbers[i+1];
         numbers[i+1] = aux;
+        changed = true;
       }
     }
-  }
+  } while(changed);
 }
 
-void selection(int *numbers, int size){
-
-  int i, j, indice_minimo;
-  for (i = 0; i < size; i++) {
-    for (j = i, indice_minimo = i; j < size; j++) {
-      if (numbers[j] < numbers[indice_minimo]) {
-        indice_minimo = j;
+void selection(int *numbers, int size)
+{
+  for (int i = 0, min = i; i < size; i++)
+  {
+    min = i;
+    for (int j = i + 1; j < size; j++)
+    {
+      if (numbers[j] < numbers[min])
+      {
+        min = j;
       }
     }
     int aux = numbers[i];
-    numbers[i] = numbers[indice_minimo];
-    numbers[indice_minimo] = aux;
+    numbers[i] = numbers[min];
+    numbers[min] = aux;
   }
 }
