@@ -116,7 +116,7 @@
 - The =*= operator is also the *dereference operator*, which goes to an
   address to get the value stored there. For example, we can say:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -126,7 +126,7 @@
       printf("%p\n", p);
       printf("%i\n", *p);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ ./address
@@ -138,46 +138,56 @@
     the value at the address with =*p=, which is =50=.
   - Since we declared =p= to be an =int         *=, the compiler knows
     that =*p= is an =int=, so the right number of bytes are read.
+
 - In memory, we might have one variable, =p=, with the value of some
   address, like =0x123=, stored, and another variable, an integer with
-  the value =50=, at that addresss:\\
+  the value =50=, at that addresss:
+  
   [[file:p.png]]
-  - Notice that =p= takes up 8 bytes, since in modern computer systems,
-    64 bits are used in order to address the billions of bytes of memory
-    available. With 32 bits, we can only count up to about 4 billion
-    bytes, or about 4GB of memory.
+
+  Notice that =p= takes up 8 bytes, since in modern computer systems,
+  64 bits are used in order to address the billions of bytes of memory
+  available. With 32 bits, we can only count up to about 4 billion
+  bytes, or about 4GB of memory.
+
 - We can abstract away the actual value of the addresses, since they'll
   be different as we declare variables in our programs. We can simply
-  think of =p= as pointing at some value in memory:\\
+  think of =p= as pointing at some value in memory:
+  
   [[file:pointing.png]]
+
 - In the real world, we might have a mailbox labeled “p”, among many
-  mailboxes with addresses. Inside our mailbox, we can put a value like
-  =0x123=, which is the address of some other mailbox that's labeled
-  “n”.
+  mailboxes with addresses. Inside our mailbox, we can put a value
+  like =0x123=, which is the address of some other mailbox that's
+  labeled “n”.
 
 ** Strings
-   :PROPERTIES:
-   :CUSTOM_ID: strings
-   :END:
-- We can declare a string with =string s =     "HI!";=, which will be
+
+- We can declare a string with =string s = "HI!";=, which will be
   stored one character at a time in memory. And we can access each
-  character with =s[0]=, =s[1]=, =s[2]=, and =s[3]=:\\
+  character with =s[0]=, =s[1]=, =s[2]=, and =s[3]=:
+  
   [[file:s_array.png]]
+
 - But it turns out that each character, since it's stored in memory,
   /also/ has some unique address, and =s= is actually just a pointer
-  with the address of the first character:\\
+  with the address of the first character:
+  
   [[file:s_pointer.png]]
+
   - =s= is a variable of type =string=, which is a pointer to a
     character.
   - Recall that we can read the entire string by starting at the address
     in =s=, and continue reading one character at a time from memory
     until we reach =\0=.
+
 - It turns out that =string s = "HI!"= is the same as
   =char *s = "HI!";=. And we can use strings in C in the exact same way
   without the CS50 Library, by using =char *=.
+
 - Let's print out a string:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -186,7 +196,7 @@
       string s = "HI!";
       printf("%s\n", s);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -196,7 +206,7 @@
 
 - Now, we can remove the CS50 Library, and say:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -204,7 +214,7 @@
       char *s = "HI!";
       printf("%s\n", s);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -214,7 +224,7 @@
 
 - We can experiment and see the address of characters:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -226,7 +236,7 @@
       printf("%p\n", s);
       printf("%p\n", p);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -235,13 +245,14 @@
   0x7ffd4227fdd7
   #+end_example
 
-  - We store the first character of =s= into =c=, and print out its
-    address with =p=. We also print out =s= as an address with =%p=, and
-    we see that the values are difference since we made a copy of the
-    first character with =char c =         s[0];=.
+  We store the first character of =s= into =c=, and print out its
+  address with =p=. We also print out =s= as an address with =%p=, and
+  we see that the values are difference since we made a copy of the
+  first character with =char c = s[0];=.
+
 - Now, we'll print the address of the first character in =s=:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -252,7 +263,7 @@
       printf("%p\n", p);
       printf("%p\n", s);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -261,12 +272,13 @@
   0x402004
   #+end_example
 
-  - With =char *p =         &s[0];=, we store the address of the first
-    character in =s= into a pointer called =p=. And now, when we print
-    =p= and =s= as addresses, we see the same value.
+  With =char *p = &s[0];=, we store the address of the first character
+  in =s= into a pointer called =p=. And now, when we print =p= and =s=
+  as addresses, we see the same value.
+
 - We can see the address of each character in =s=:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -278,7 +290,7 @@
       printf("%p\n", &s[2]);
       printf("%p\n", &s[3]);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -290,20 +302,19 @@
   0x402007
   #+end_example
 
-  - Again, the address of the first character, =&s[0]=, is the same as
-    the value of =s=. And each following character has an address that
-    is one byte higher.
-- In the CS50 Library, a string is defined with just
-  =typedef char     *string;=. With =typedef=, we're creating a custom
-  data type for the word =string=, making it equivalent to =char *=.
+  Again, the address of the first character, =&s[0]=, is the same as
+  the value of =s=. And each following character has an address that
+  is one byte higher.
+
+- In the CS50 Library, a string is defined with just =typedef char
+  *string;=. With =typedef=, we're creating a custom data type for the
+  word =string=, making it equivalent to =char *=.
 
 ** Pointer arithmetic
-   :PROPERTIES:
-   :CUSTOM_ID: pointer-arithmetic
-   :END:
+
 - We can print out each character in a string:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -315,7 +326,7 @@
       printf("%c\n", s[2]);
       printf("%c\n", s[3]);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -329,10 +340,10 @@
 
   - When we declare a =string= with double quotes, ="=, the compiler
     figures out where to put those characters in memory as an array.
-- Let's simplify our code to use =char       *= and show just the
+- Let's simplify our code to use =char *= and show just the
   printable characters:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -342,7 +353,7 @@
       printf("%c\n", s[1]);
       printf("%c\n", s[2]);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -354,7 +365,7 @@
 
 - But we can go to addresses directly:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -364,20 +375,21 @@
       printf("%c\n", *(s + 1));
       printf("%c\n", *(s + 2));
   }
-  #+end_example
+  #+end_src
 
-  - =*s= goes to the address stored in =s=, and =*(s +         1)= goes
-    to the location in memory with the next character, an address that
-    is one byte higher.
-  - =s[1]= is *syntactic sugar*, like an abstraction for
-    =*(s +         1)=, equivalent in function but more human-friendly
-    to read and write.
+  - =*s= goes to the address stored in =s=, and =*(s + 1)= goes to the
+    location in memory with the next character, an address that is one
+    byte higher.
+  - =s[1]= is *syntactic sugar*, like an abstraction for =*(s + 1)=,
+    equivalent in function but more human-friendly to read and write.
+
 - *Pointer arithmetic* is the process of applying mathematical
-  operations to pointers, using them just like numbers (which they are).
+  operations to pointers, using them just like numbers (which they
+  are).
 - We can declare an array of numbers, and access them with pointer
   arithmetic:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -392,7 +404,7 @@
       printf("%i\n", *(numbers + 5));
       printf("%i\n", *(numbers + 6));
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make address
@@ -415,12 +427,10 @@
     pointer with =*numbers=.
 
 ** Compare and copy
-   :PROPERTIES:
-   :CUSTOM_ID: compare-and-copy
-   :END:
+
 - Let's try to compare two integers from the user:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -438,7 +448,7 @@
           printf("Different\n");
       }
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make compare
@@ -452,13 +462,14 @@
   Different
   #+end_example
 
-  - We compile and run our program, and it works as we'd expect, with
-    the same values of the two integers giving us “Same” and different
-    values “Different”.
+  We compile and run our program, and it works as we'd expect, with
+  the same values of the two integers giving us “Same” and different
+  values “Different”.
+
 - When we try to compare two strings, we see that the same inputs are
   causing our program to print “Different”:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -476,7 +487,7 @@
           printf("Different\n");
       }
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make compare
@@ -491,16 +502,17 @@
   #+end_example
 
   - Even when our inputs are the same, we see “Different” printed.
-  - Each “string” is a pointer, =char         *=, to a different
-    location in memory, where the first character of each string is
-    stored. So even if the characters in the string are the same, this
-    will always print “Different”.
+  - Each “string” is a pointer, =char *=, to a different location in
+    memory, where the first character of each string is stored. So
+    even if the characters in the string are the same, this will
+    always print “Different”.
+
 - And =get_string=, this whole time, has been returning just a =char *=,
   or a pointer to the first character of a string from the user. Since
   we called =get_string= twice, we got two different pointers back.
 - We can fix our program with:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
   #include <string.h>
@@ -519,7 +531,7 @@
           printf("Different\n");
       }
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make compare
@@ -531,7 +543,7 @@
 
 - We'll take a look at the values of =s= and =t= as pointers:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <stdio.h>
 
@@ -543,7 +555,7 @@
       printf("%p\n", s);
       printf("%p\n", t);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make compare
@@ -554,22 +566,28 @@
   0x19e06f0
   #+end_example
 
-  - We see that the addresses of our two strings are indeed different.
+  We see that the addresses of our two strings are indeed different.
+
 - Let's visualize how this might look in our computer's memory. Our
-  first string might be at address 0x123, our second might be at 0x456,
-  and =s= will have the value of =0x123=, pointing at that location, and
-  =t= will have the value of =0x456=, pointing at another location:\\
+  first string might be at address 0x123, our second might be at
+  0x456, and =s= will have the value of =0x123=, pointing at that
+  location, and =t= will have the value of =0x456=, pointing at
+  another location:
+
   [[file:s_t.png]]
-  - Since our computer puts each string at some location in memory for
-    us, we need =s= and =t= to point to each of them. And now we see why
-    comparing =s= and =t= directly will always print “Different”.
-    =strcmp=, in contrast, will go to each string and compare them
-    character by character.
+
+  Since our computer puts each string at some location in memory for
+  us, we need =s= and =t= to point to each of them. And now we see why
+  comparing =s= and =t= directly will always print “Different”.
+  =strcmp=, in contrast, will go to each string and compare them
+  character by character.
+
 - In C, we can also get the address of =s= or =t=, and store them in a
   variable of the type =char **=, a pointer to a pointer.
+
 - Let's try to copy a string:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <ctype.h>
   #include <stdio.h>
@@ -586,7 +604,7 @@
       printf("s: %s\n", s);
       printf("t: %s\n", t);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make copy
@@ -600,28 +618,33 @@
     capitalize the first letter in =t=.
   - But when we run our program, we see that both =s= and =t= are now
     capitalized.
+
 - Since we set =s= and =t= to the same value, or the same address,
   they're both pointing to the same character, and so we capitalized the
-  same character in memory:\\
-  [[file:s_t_copy.png]] [[file:s_t_pointing.png]]
+  same character in memory:
+
+  [[file:s_t_copy.png]]
+
+  [[file:s_t_pointing.png]]
 
 ** Memory allocation
-   :PROPERTIES:
-   :CUSTOM_ID: memory-allocation
-   :END:
+
 - To actually make a copy of a string, we have to do a little more work,
   and copy each character in =s= to somewhere else in memory.
+
 - We'll need to use a new function, *=malloc=*, to /allocate/ some
   number of bytes in memory. And we'll use *=free=* to mark memory as
   usable when we're done with it, so the operating system can do
   something else with it.
-  - Our computers might slow down if a program we're running has a bug
-    where it allocates more and more memory but never frees it. The
-    operating system will take longer and longer to find enough
-    available memory for our program.
+
+  Our computers might slow down if a program we're running has a bug
+  where it allocates more and more memory but never frees it. The
+  operating system will take longer and longer to find enough
+  available memory for our program.
+
 - Let's copy a string now:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <ctype.h>
   #include <stdio.h>
@@ -644,7 +667,7 @@
       printf("s: %s\n", s);
       printf("t: %s\n", t);
   }
-  #+end_example
+  #+end_src
 
   - We create a new variable to point to a new string with =char *t=.
     The argument to =malloc= is the number of bytes we'd like to use. We
@@ -654,9 +677,10 @@
     use =strlen(s) + 1= since we want to copy the null character too to
     end the string. In the loop, we set =t[i] = s[i]=, copying the
     characters.
+
 - We could also use a library function, =strcpy=:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <ctype.h>
   #include <stdio.h>
@@ -678,7 +702,7 @@
 
       free(t);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make copy
@@ -691,9 +715,10 @@
   - Now, we can capitalize the first letter of =t=.
   - We'll remember to call =free= on =t=, since we allocated it
     ourselves.
+
 - We can add some error-checking to our program:
 
-  #+begin_example
+  #+begin_src c
   #include <cs50.h>
   #include <ctype.h>
   #include <stdio.h>
@@ -722,7 +747,7 @@
 
       free(t);
   }
-  #+end_example
+  #+end_src
 
   - If our computer is out of memory, =malloc= will return =NULL=, the
     null pointer, or a special value of all =0= bits that indicates
@@ -730,19 +755,20 @@
     case, and exit if =t= is =NULL=.
   - We should also check that =t= has a length, before trying to
     capitalize the first character.
-- We can visualize how this looks in our computer's memory:\\
+
+- We can visualize how this looks in our computer's memory:
+
   [[file:s_t_malloc.png]]
-  - We've allocated memory at =0x456= and set =t= to point to it. Then,
-    we used =strcpy= to copy each character's value, starting from the
-    address =s= is pointing to, to the address =t= is pointing to.
+  
+  We've allocated memory at =0x456= and set =t= to point to it. Then,
+  we used =strcpy= to copy each character's value, starting from the
+  address =s= is pointing to, to the address =t= is pointing to.
 
 ** valgrind
-   :PROPERTIES:
-   :CUSTOM_ID: valgrind
-   :END:
+
 - Let's allocate memory for some integers:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
   #include <stdlib.h>
 
@@ -753,7 +779,7 @@
       x[2] = 73;
       x[3] = 33;
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make memory
@@ -770,10 +796,12 @@
   - When we compile and run our program, though, nothing seems to
     happen. It turns out that our mistake wasn't bad enough to cause a
     segmentation fault this time, though it might next time.
+
 - *=valgrind=* is a command-line tool that we can use to run our program
   and see if it has any memory-related issues.
-- We'll run =valgrind ./memory= after compiling, and we'll see a lot of
-  output:
+
+- We'll run =valgrind ./memory= after compiling, and we'll see a lot
+  of output:
 
   #+begin_example
   $ valgrind ./memory
@@ -808,12 +836,13 @@
   ==5902== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
   #+end_example
 
-  - We'll see some snippets like
-    =Invalid         write of size 4 at ... memory.c:9=, which gives us
-    a hint to look at line 9, where we're using =x[3]=.
+  - We'll see some snippets like =Invalid write of size 4 at
+    ... memory.c:9=, which gives us a hint to look at line 9, where
+    we're using =x[3]=.
+
 - We'll fix that mistake:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
   #include <stdlib.h>
 
@@ -824,7 +853,7 @@
       x[1] = 73;
       x[2] = 33;
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make memory
@@ -855,12 +884,13 @@
   ==6435== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
   #+end_example
 
-  - Now, we see less output, with only one error telling us
-    =12 bytes ... are         definitely lost=, in that we've allocated
-    them, but not freed them.
+  - Now, we see less output, with only one error telling us =12 bytes
+    ... are definitely lost=, in that we've allocated them, but not
+    freed them.
+
 - Once we free our memory, we'll see no errors:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
   #include <stdlib.h>
 
@@ -872,7 +902,7 @@
       x[2] = 33;
       free(x);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make memory
@@ -895,12 +925,10 @@
   #+end_example
 
 ** Garbage values
-   :PROPERTIES:
-   :CUSTOM_ID: garbage-values
-   :END:
+
 - Let's take a look at this program:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
   #include <stdlib.h>
     
@@ -912,7 +940,7 @@
           printf("%i\n", scores[i]);
       }
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make garbage
@@ -927,16 +955,17 @@
   - The values in the array are *garbage values*, or whatever unknown
     values that were in memory, from whatever program was running in our
     computer before.
-- If we aren't careful with how our programs access memory, users might
-  end up seeing data from previous programs, like passwords. And if we
-  try to go to an address that's a garbage value, our program is likely
-  to crash from a segmentation fault.
-- We watch [[https://www.youtube.com/watch?v=3uLKjb973HU][Pointer Fun
-  with Binky]], an animated video demonstrating pointers, =malloc=, and
-  dereferencing. The code from the video might look like this in one
-  program:
 
-  #+begin_example
+- If we aren't careful with how our programs access memory, users
+  might end up seeing data from previous programs, like passwords. And
+  if we try to go to an address that's a garbage value, our program is
+  likely to crash from a segmentation fault.
+
+- We watch [[https://www.youtube.com/watch?v=3uLKjb973HU][Pointer Fun with Binky]], an animated video demonstrating
+  pointers, =malloc=, and dereferencing. The code from the video might
+  look like this in one program:
+
+  #+begin_src c
   int main(void)
   {   
       int *x;  
@@ -951,30 +980,30 @@
 
       *y = 13;   
   }
-  #+end_example
+  #+end_src
 
   - In the first two lines, we declare two pointers. Then, we allocate
-    memory for =x=, but not =y=, so we can assign a value to the memory
-    =x= is pointing to with =*x = 42;=. But =*y =         13;= is
-    problematic, since we haven't allocated any memory for =y=, and the
-    garbage value there points to some area in memory we likely don't
-    have access to.
+    memory for =x=, but not =y=, so we can assign a value to the
+    memory =x= is pointing to with =*x = 42;=. But =*y = 13;= is
+    problematic, since we haven't allocated any memory for =y=, and
+    the garbage value there points to some area in memory we likely
+    don't have access to.
+
   - We can write =y = x;= so that =y= points to the same allocated
     memory as =x=, and use =*y =         13;= to set the value there.
 
 ** Swap
-   :PROPERTIES:
-   :CUSTOM_ID: swap
-   :END:
+
 - We'll have a volunteer on stage try to swap two liquids, one orange
   liquid in one glass, and one purple liquid in another. But we need a
   third glass to temporarily pour one liquid into, such as the orange
   liquid in the first glass. Then, we can pour the purple liquid into
   the first glass, and finally the orange liquid from the third glass
   into the second.
+
 - Let's try to swap the values of two integers:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   void swap(int a, int b);
@@ -995,7 +1024,7 @@
       a = b;
       b = tmp;
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make swap
@@ -1015,7 +1044,7 @@
   surrounding function can access. Changing those values won't change
   =x= and =y= in the =main= function:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   void swap(int a, int b);
@@ -1038,7 +1067,7 @@
       b = tmp;
       printf("a is %i, b is %i\n", a, b);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make swap
@@ -1052,12 +1081,12 @@
   - Our =swap= function works while we're inside it.
 
 ** Memory layout
-   :PROPERTIES:
-   :CUSTOM_ID: memory-layout
-   :END:
+
 - Within our computer's memory, different types of data that need to be
-  stored for our program are organized into different sections:\\
+  stored for our program are organized into different sections:
+
   [[file:memory_layout.png]]
+
   - The *machine code* section is our compiled program's binary code.
     When we run our program, that code is loaded into memory.
   - Just below, or in the next part of memory, are *global variables* we
@@ -1067,6 +1096,7 @@
     allocating memory from the top down.
   - The *stack* section is used by functions and local variables in our
     program as they are called, and grows upwards.
+
 - If we call =malloc= for too much memory, we will have a *heap
   overflow*, since we end up going past our heap. Or, if we call too
   many functions without returning from them, we will have a *stack
@@ -1097,17 +1127,18 @@
     local variables, =a=, =b=, and =tmp=.
   - Once =swap= returns, its memory is freed and its values are now
     garbage values, and the variables in =main= haven't been changed.
+
 - By passing in the address of =x= and =y=, our =swap= function will be
   able to change the original values:
 
-  #+begin_example
+  #+begin_src c
   void swap(int *a, int *b)
   {
       int tmp = *a;
       *a = *b;
       *b = tmp;
   }
-  #+end_example
+  #+end_src
 
   - The addresses of =x= and =y= are passed in from =main= to =swap=
     with =&x= and =&y=, and we use the =int *a= syntax to declare that
@@ -1207,7 +1238,7 @@
 - In our program, we'll need to pass in the addresses of =x= and =y= to
   our =swap= function:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   void swap(int *a, int *b);
@@ -1228,7 +1259,7 @@
       *a = *b;
       *b = tmp;
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make swap
@@ -1240,13 +1271,11 @@
   - With =&x=, we can get the address of =x= to pass in.
 
 ** scanf
-   :PROPERTIES:
-   :CUSTOM_ID: scanf
-   :END:
+
 - We can get an integer from the user with a C library function,
   =scanf=:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -1256,7 +1285,7 @@
       scanf("%i", &x);
       printf("x: %i\n", x);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ make scanf 
@@ -1268,9 +1297,10 @@
   - =scanf= takes a format, =%i=, so the input is “scanned” for that
     format. We also pass in the address in memory where we want that
     input to go with =&x=.
+
 - We can try to get a string the same way:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -1280,7 +1310,7 @@
       scanf("%s", s);
       printf("s: %s\n", s);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ clang -o scanf scanf.c
@@ -1293,9 +1323,10 @@
     demonstrate.
   - We haven't actually allocated any memory for =s=, so =scanf= is
     writing our string to an unknown address in memory.
+
 - We can call =malloc= to allocate memory:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -1305,7 +1336,7 @@
       scanf("%s", s);
       printf("s: %s\n", s);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ clang -o scanf scanf.c
@@ -1316,7 +1347,7 @@
 
 - And we can declare an array of 4 characters:
 
-  #+begin_example
+  #+begin_src c
   #include <stdio.h>
 
   int main(void)
@@ -1326,7 +1357,7 @@
       scanf("%s", s);
       printf("s: %s\n", s);
   }
-  #+end_example
+  #+end_src
 
   #+begin_example
   $ clang -o scanf scanf.c
@@ -1340,18 +1371,17 @@
     will work safely. But if the user types in a longer string, =scanf=
     might be trying to write past the end of our array into unknown
     memory, causing our program to crash.
-- =get_string= from the CS50 library continuously allocates more memory
-  as =scanf= reads in more characters, so it doesn't have this issue.
+
+- =get_string= from the CS50 library continuously allocates more
+  memory as =scanf= reads in more characters, so it doesn't have this
+  issue.
 
 ** Files
-   :PROPERTIES:
-   :CUSTOM_ID: files
-   :END:
-- With the ability to use pointers, we can also open files, like a
-  digital phone book in
-  [[https://cdn.cs50.net/2021/fall/lectures/4/src4/phonebook.c?highlight][=phonebook.c=]]:
 
-  #+begin_example
+- With the ability to use pointers, we can also open files, like a
+  digital phone book in [[https://cdn.cs50.net/2021/fall/lectures/4/src4/phonebook.c?highlight][=phonebook.c=]]:
+
+  #+begin_src c
   // Saves names and numbers to a CSV file
     
   #include <cs50.h>
@@ -1377,7 +1407,7 @@
       // Close file
       fclose(file);
   }
-  #+end_example
+  #+end_src
 
   - =fopen= is a new function we can use to open a file with a new type,
     =FILE=.
@@ -1449,6 +1479,7 @@
 
 - It turns out that BMP files, another format for images, have even more
   bytes in its header, or beginning of the file.
+
 - We'll learn more about these in this week's problem set as well, and
   even implement our own version of image filters, like one that only
   shows the color red:
@@ -1471,5 +1502,5 @@
   }
   #+end_src
 
-  - Here, we have a loop that iterates over all the pixels in a
-    two-dimensional array, and sets the blue and green values to 0.
+  Here, we have a loop that iterates over all the pixels in a
+  two-dimensional array, and sets the blue and green values to 0.
