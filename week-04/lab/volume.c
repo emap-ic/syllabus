@@ -37,19 +37,27 @@ int main(int argc, char *argv[])
     uint8_t header[HEADER_SIZE];
     fread(header, HEADER_SIZE, 1, input);
     fwrite(header, HEADER_SIZE, 1, output);
-    
-    // Read samples from input file and write updated data to output file
-    /*
-     * Read and write two bytes each in each interation, until the end of file
-     * Note that when its not possible to read anymore, fread will return 0 (< NUMBER_ITEMS)
-     * **/
-    int16_t buffer;
-    while (fread(&buffer, sizeof(int16_t), 1, input))
-    {
-        //New value for the volume
-        buffer *= factor;
-        fwrite(&buffer, sizeof(int16_t), 1, output);
-    }
+
+    // Determine size (in bytes) of file, from beggining to en
+    fseek(input, 0, SEEK_END); 
+    long size = ftell(input); 
+
+    // Come back with file pointer to the beggining
+    fseek(input, 0, SEEK_SET); 
+
+    // The number of bytes pairs after the header
+    int numPairsBytes = size / sizeof(int16_t) - HEADER_SIZE;
+
+    // Alloc memory to the buffer to read it at once
+    int16_t *pairsBytes = (int16_t*)malloc(numPairsBytes * sizeof(int16_t));
+    fread(pairsBytes, sizeof(int16_t), numPairsBytes, input);
+
+    // Update volume by factor
+    for(int i = 0; i < numPairsBytes; i++)
+        pairsBytes[i] *= factor;
+
+    // Write the up to date array to output file
+    fwrite(pairsBytes, sizeof(int16_t), numPairsBytes, output);
 
     // Close files
     fclose(input);
