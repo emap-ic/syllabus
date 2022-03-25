@@ -16,14 +16,6 @@
   'merge sort'. No código fonte apresendo na forma de comentário link
   para um bom livro com o pseudo-código para o merge sort.
 
-* Compilar
-
-Para compilar, use:
-
-#+begin_src
-clang -ggdb3 -O0 -std=gnu17 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow -lcrypt -lcs50 -lm -o sort sort.c
-#+end_src
-
 
 * Testando
 
