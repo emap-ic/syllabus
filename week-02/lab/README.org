@@ -69,7 +69,7 @@ word, and the higher scoring player wins.
     worth =1= point.
   - Though Scrabble rules normally require that a word be in the
     dictionary, no need to check for that in this problem!
-- In =main()=, your program should print, depending on the playersâ€™
+- In =main()=, your program should print, depending on the players's
   scores, =Player 1 wins!=, =Player 2 wins!=, or =Tie!=.
 
 ** Hints

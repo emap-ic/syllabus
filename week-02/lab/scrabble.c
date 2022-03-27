@@ -1,9 +1,3 @@
-/*
-
- Author: Juliana
-
-*/
-
 #include <ctype.h>
 #include <cs50.h>
 #include <stdio.h>
@@ -40,12 +34,17 @@ int main(void)
 int compute_score(string word)
 {
     int score = 0;
-    for(int i = 0; i < strlen(word); i++)
+    for(int i = 0, n = strlen(word); i < n; i++)
     {
       int c = word[i];
-      if((64 < c && c < 91 ) || (96 < c && c < 123))
+      if(isupper(word[i]))
       {
-        score += POINTS[c % 32 - 1];
+        score += POINTS[c - 65];
+
+      }
+      else if(islower(word[i]))
+      {
+        score += POINTS[c - 97];
       }
     }
     return score;
