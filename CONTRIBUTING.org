@@ -1,0 +1,53 @@
+#+title: Como Contribuir
+
+Como todo projeto opensource, temos que ter regras claras para
+contribuição neste repositório. Se quiser contribuir:
+
+
+1. Os alunos agora tem acesso de escrita no repositório, mas não devem
+   *nunca* escrever diretamente no branch *main*.
+
+2. Para qualquer alteração, comece criando uma issue
+   https://github.com/emap-ic/syllabus/issues onde vc descreva o que
+   irá fazer. Aguarde algum feedback. Se o retorno for positivo, e a
+   idéia for aceita...
+
+3. Faça um clone do repositório em sua máquina. Em seguida, crie um
+   novo branch com o nome =issue-XXX= onde XXX é o número do issue
+   criado. Vc estará criando um branch para 'resolver' o issue.A
+
+   #+begin_src bash
+     git clone git@github.com:emap-ic/syllabus.git
+     cd syllabus
+     git checkout -b issue-XXX
+   #+end_src
+
+   Lembre de trocar o XXX acima pelo efetivo número da issue que vc
+   criou e onde houve a discussão sobre sua idéia de contribuição.
+
+4. Durante seu trabalho, vc pode querer mostrar resultados
+   intermediários, basta fazer commits e `push(es)` desta branch para
+   o Github. Se usar apenas o =git push=, provavelmente terá um erro
+   parecido com:
+
+   #+begin_src bash
+     % git push
+     fatal: The current branch test has no upstream branch.
+     To push the current branch and set the remote as upstream, use
+
+	 git push --set-upstream origin test
+   #+end_src
+
+   Apenas significa que vc deve usar o comando sugerido. Note que
+   acima, a palavra =test= foi apenas porque para exibir este erro
+   usei um branch chamado =test=, mas vc deve usar o nome =issue-XXX=
+   onde XXX ... bem, vc entendeu né?
+
+5. Em algum momento, quando vc considerar seu trabalho completo, basta
+   criar um *pull request*, ou seja, um pedido para que sua branch
+   seja incorporada a branch *main*. Em
+   https://github.com/emap-ic/syllabus/pulls veja o botão `New pull
+   request` escolha sua branch como origem e a branch *main* como
+   destino.
+
+   
