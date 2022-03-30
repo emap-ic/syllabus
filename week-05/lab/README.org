@@ -1,4 +1,4 @@
-#+title: [[#lab-5-inheritance][Lab 5 Inheritance]]
+#+title: Lab 5 Inheritance
 
 You are welcome to collaborate with one or two classmates on this lab,
 though it is expected that every student in any such group contribute
