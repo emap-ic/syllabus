@@ -100,6 +100,8 @@ Python e SQL, além de HTML, CSS e JavaScript.
   Education, 2015, ISBN 0-321-77641-0
   [[https://pt.wikibooks.org/wiki/Programar_em_C]]
 
+- https://en.wikibooks.org/wiki/C_Programming
+
 
 * Minicurrículo do(s) Professor(s)
 
