@@ -7,7 +7,7 @@
 - We might zoom in further and further in an image, but very soon we'll
   see individual pixels, like the ones in this puppet's eye:
   
-  [[file:eyes.png]]
+  [[file:img/eyes.png]]
 
   Since this image is stored with a finite number of bytes, each
   perhaps representing a red, green, or blue value for each pixel,
@@ -16,12 +16,12 @@
 - A simpler image of a smiley face might be represented with a single
   bit per pixel:
 
-  [[file:smiley.png]]
+  [[file:img/smiley.png]]
 
 - [[https://en.wikipedia.org/wiki/Adobe_Photoshop][Adobe Photoshop]], a popular image editing software, includes a color
   picker that looks like this:
   
-  [[file:color_picker.png]]
+  [[file:img/color_picker.png]]
 
   Here, the color black is selected, and we see that the values for R,
   G, and B, or red, green, and blue respectively, are all 0.
@@ -43,7 +43,7 @@
 - For our computer's memory, too, we'll see hexadecimal used to describe
   each address or location:
   
-  [[file:addresses.png]]
+  [[file:img/addresses.png]]
 
   By writing =0x= in front of a hexadecimal value, we can distinguish
   them from decimal values.
@@ -64,7 +64,7 @@
   the binary value of 50, with some value for its address, like
   =0x123=:
   
-  [[file:50.png]]
+  [[file:img/50.png]]
 
 - A *pointer* is a variable that stores an address in memory, where some
   other variable might be stored.
@@ -143,7 +143,7 @@
   address, like =0x123=, stored, and another variable, an integer with
   the value =50=, at that addresss:
   
-  [[file:p.png]]
+  [[file:img/p.png]]
 
   Notice that =p= takes up 8 bytes, since in modern computer systems,
   64 bits are used in order to address the billions of bytes of memory
@@ -154,7 +154,7 @@
   be different as we declare variables in our programs. We can simply
   think of =p= as pointing at some value in memory:
   
-  [[file:pointing.png]]
+  [[file:img/pointing.png]]
 
 - In the real world, we might have a mailbox labeled “p”, among many
   mailboxes with addresses. Inside our mailbox, we can put a value
@@ -167,13 +167,13 @@
   stored one character at a time in memory. And we can access each
   character with =s[0]=, =s[1]=, =s[2]=, and =s[3]=:
   
-  [[file:s_array.png]]
+  [[file:img/s_array.png]]
 
 - But it turns out that each character, since it's stored in memory,
   /also/ has some unique address, and =s= is actually just a pointer
   with the address of the first character:
   
-  [[file:s_pointer.png]]
+  [[file:img/s_pointer.png]]
 
   - =s= is a variable of type =string=, which is a pointer to a
     character.
@@ -574,7 +574,7 @@
   location, and =t= will have the value of =0x456=, pointing at
   another location:
 
-  [[file:s_t.png]]
+  [[file:img/s_t.png]]
 
   Since our computer puts each string at some location in memory for
   us, we need =s= and =t= to point to each of them. And now we see why
@@ -623,9 +623,9 @@
   they're both pointing to the same character, and so we capitalized the
   same character in memory:
 
-  [[file:s_t_copy.png]]
+  [[file:img/s_t_copy.png]]
 
-  [[file:s_t_pointing.png]]
+  [[file:img/s_t_pointing.png]]
 
 ** Memory allocation
 
@@ -758,7 +758,7 @@
 
 - We can visualize how this looks in our computer's memory:
 
-  [[file:s_t_malloc.png]]
+  [[file:img/s_t_malloc.png]]
   
   We've allocated memory at =0x456= and set =t= to point to it. Then,
   we used =strcpy= to copy each character's value, starting from the
@@ -1085,7 +1085,7 @@
 - Within our computer's memory, different types of data that need to be
   stored for our program are organized into different sections:
 
-  [[file:memory_layout.png]]
+  [[file:img/memory_layout.png]]
 
   - The *machine code* section is our compiled program's binary code.
     When we run our program, that code is loaded into memory.
