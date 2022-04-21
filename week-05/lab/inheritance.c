@@ -103,15 +103,11 @@
   {
       // Handle base case
       if (p == NULL)
-      {
-          return;
-      }
+	return;
   
       // Print indentation
-      for (int i = 0; i < generation * INDENT_LENGTH; I++)
-      {
-          printf(" ");
-      }
+      for (int i = 0; i < generation * INDENT_LENGTH; i++)
+	printf(" ");
   
       // Print person
       if (generation == 0)
@@ -124,7 +120,7 @@
       }
       else
       {
-          for (int i = 0; i < generation - 2; I++)
+          for (int i = 0; i < generation - 2; i++)
           {
               printf("Great-");
           }
