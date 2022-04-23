@@ -1,14 +1,17 @@
-
 import sys
 
+#Lists and dictionaries are mutable types in Python, meaning they get passed as references to functions.
+#This, of course, is fantastic. It is so fantastic that I ended up putting 'data' into 90% of the function parameters in this code...
+#Thinking about it... it probably is not the best practice, but oh well.
+
 def read(filename):
-    with open(sys.argv[1],"r") as f:
+    with open(filename,"r") as f:
         candidate_count = int(f.readline())
 
-        names = []
+        names = {}
         for l in range(candidate_count):
             line = f.readline()
-            names.append(line.strip())
+            names[line.strip()] = 0
             
         voter_count = int(f.readline())
 
@@ -17,6 +20,11 @@ def read(filename):
             current = []
             for c in range(candidate_count):
                 line = f.readline()
+                if line == '':
+                    print("There are missing preferences for a voter!")
+                    return 1
+
+                print('good read')
                 current.append(line.strip())
             preferences.append(current)
 
@@ -26,34 +34,86 @@ def read(filename):
                 preferences = preferences)
     
 
-def eliminate(min):
-    pass
+def eliminate(data, minim):
+    for cand, votes in data['names'].items():
+        if votes == minim:
+            data['names'][cand] = 'eliminated'
 
 
-def is_tie(min):
-    pass
+def is_tie(data, minim):
+    print("tie")
+    for votes in data['names'].values():
+        if votes != minim and votes != 'eliminated':
+            return False
 
+    return True
 
-def find_min():
-    pass
+def find_min(data):
+    print('min')
+    minim = data['voter_count']
 
-def print_winner():
-    pass
+    for cand, votes in data['names'].items():
+        if votes != 'eliminated' and votes < minim:
+            minim = votes
 
-def tabulate():
-    pass
+    return minim
 
+def print_winner(data):
+    print('win')
+    for cand, votes in data['names'].items():
+        print(cand)
+        print(votes)
+        print(int(data['voter_count'])/2)
 
-def vote(voter, rank, name):
-    pass
+        if votes != 'eliminated' and votes > int(data['voter_count'])/2:
+            print('winner:')
+            print(cand)
+            return True
 
+    return False
+
+def tabulate(data):
+    print('tab')
+    for i in range(data['voter_count']):
+        for j in range(data['candidate_count']):
+            preference = data['preferences'][i][j]
+
+            if data['names'][preference] != 'eliminated':
+                data['names'][preference] += 1
+                print(preference)
+                break
 
 def main():
     if len(sys.argv) != 2:
         sys.exit("Usage: runoff FILE")
-
+    if read(sys.argv[1]) == 1:
+        sys.exit(1)
     data = read(sys.argv[1])
-    print(data)
 
+    while True:
+        tabulate(data)
+
+        if print_winner(data):
+            print(data['names'])
+            break
+        
+        min_votes = find_min(data)
+        tie = is_tie(data, min_votes)
+
+        if tie:
+            for cand, votes in data['names'].items():
+                if votes != 'eliminated':
+                    print(cand)
+                    print(data['names'])
+
+            break
+
+        eliminate(data, min_votes)
+
+        for cand, votes in data['names'].items():
+            if votes != 'eliminated':
+                data['names'][cand] = 0
+
+    sys.exit(0)
 
 main()
