@@ -1,0 +1,15 @@
+<votacao>
+  <candidatos>
+    <candidato name="Alice" />
+    <candidato name="Bob"/>
+    <candidato name="Charlie"/> 
+  </candidatos>
+  <votos>
+    <voto>
+      <escolha>Alice</escolha>
+      <escolha>Bob</escolha>
+      <escolha>Charlie</escolha>
+    </voto>
+  </votos>
+</votacao>  
+
