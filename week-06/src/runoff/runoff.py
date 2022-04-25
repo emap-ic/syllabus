@@ -1,8 +1,5 @@
 import sys
 
-#Lists and dictionaries are mutable types in Python, meaning they get passed as references to functions.
-#This, of course, is fantastic. It is so fantastic that I ended up putting 'data' into 90% of the function parameters in this code...
-#Thinking about it... it probably is not the best practice, but oh well.
 
 def read(filename):
     with open(filename,"r") as f:
@@ -28,10 +25,7 @@ def read(filename):
                 current.append(line.strip())
             preferences.append(current)
 
-    return dict(candidate_count = candidate_count,
-                names = names,
-                voter_count = voter_count,
-                preferences = preferences)
+    return dict(names = names, preferences = preferences)
     
 
 def eliminate(data, minim):
@@ -50,13 +44,13 @@ def is_tie(data, minim):
 
 def find_min(data):
     print('min')
-    minim = data['voter_count']
+    m = len(data['preferences'])
 
     for cand, votes in data['names'].items():
         if votes != 'eliminated' and votes < minim:
-            minim = votes
+            m = votes
 
-    return minim
+    return m
 
 def print_winner(data):
     print('win')
