@@ -73,7 +73,7 @@
 #+end_src
 
 
-4. Uma consulta mais elaborada... mais **errada**! 
+4. Uma consulta mais elaborada... mas **errada**! 
 
    os 5 shows mais populares:
 
