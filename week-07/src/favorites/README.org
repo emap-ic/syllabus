@@ -1,0 +1,113 @@
+
+* Versão mais básica
+
+  Nesta abordagem, o arquivo CSV é importado diretamente no SQLite
+  usando o suporte do SQLite à CSV, nenhuma interpretação dos dados é
+  feita, cada CSV gera uma tabela.
+
+  #+begin_src bash
+    % sqlite3 emap.db
+    SQLite version 3.37.0 2021-12-09 01:34:53
+    Enter ".help" for usage hints.
+    sqlite> .mode csv
+    sqlite> .import emap-shows.csv favorites
+    sqlite> .schema
+    CREATE TABLE IF NOT EXISTS "favorites"(
+      "timestamp" TEXT,
+      "title" TEXT,
+      "genres" TEXT
+    );
+  #+end_src
+
+* Criando o DB mais elaborado
+
+1. Escrevi o arquivo schema.sql com os comandos para criar as
+   tabelas. Depois rodando o SQLite para criar o DB file e executar os
+   comandos. O comando =.schema= foi usado para verificar se tudo
+   estava como esperado antes de sair do console do sqlite3 =CTRL-C=.
+
+   #+begin_src bash
+     sqlite3 favorites.db
+     sqlite> .read schema.sql
+     sqlite> .schema
+     CREATE TABLE shows
+      (id INTEGER,
+       title TEXT NOT NULL,
+       PRIMARY KEY(id));
+     CREATE TABLE genres
+      (id INTEGER,
+       genre TEXT NOT NULL,
+       PRIMARY KEY(id));
+     CREATE TABLE show_genres
+      (show_id INTEGER,
+       genre_id INTEGER,
+       FOREIGN KEY(show_id) REFERENCES shows(id),
+       FOREIGN KEY(genre_id) REFERENCES shows(id));
+   #+end_src
+
+2. agora no código =favorites.py= temos que inserir os dados nas
+   tabelas.
+
+3. Uma consulta possivel no sqllite: quais são as séries classificadas
+   com o gênero 'Romance'?
+
+#+begin_src bash
+  sqlite3 favorites.db
+  sqlite> .mode column
+  sqlite> select s.title,g.genre
+     ...>   from shows s, genres g, show_genres sg
+     ...>   where
+     ...>    s.id = sg.show_id
+     ...>    and g.id = sg.genre_id
+     ...>    and g.genre = 'Romance';
+  title              genre
+  -----------------  -------
+  the Untamed        Romance
+  Grace and Frankie  Romance
+  Gilmore Girls      Romance
+  Game of Thrones    Romance
+  Black Mirror       Romance
+  the bachelorette   Romance
+  adventure time     Romance
+  Community          Romance
+#+end_src
+
+
+4. Uma consulta mais elaborada... mais **errada**! 
+
+   os 5 shows mais populares:
+
+   #+begin_src sql
+     sqlite> select show_id,count(*) as t from show_genres group by show_id order by t desc limit 5;
+     show_id  t
+     -------  -
+     30       5
+     6        5
+     33       4
+     18       4
+     7        4
+   #+end_src
+
+   os gêneros dos 5 shows mais populares:
+
+   #+begin_src sql
+     sqlite> select distinct g.genre
+	...> from genres g, show_genres sg
+	...> where g.id = sg.genre_id and sg.show_id in (select show_id as t from show_genres group by show_id order by t desc limit 5);
+     genre
+     ---------------
+     Drama
+     Action
+     Thriller
+     Science Fiction
+     Comedy
+     Other
+   #+end_src
+
+   Por que está errada? O que perdemos na modelagem que fizemos?
+
+
+* Links
+
+  - https://docs.python.org/3/library/sqlite3.html
+    
