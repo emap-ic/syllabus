@@ -1,0 +1,112 @@
+#+title: Exemplo Bosque
+
+Durante a aula, ilustramos outro uso do SQLite e SQL para um problema
+real. A idéia é consultar arquivos [[http://universaldependencies.org/format.html][CoNLLU]] do projeto Universal
+Dependencies (UD). Neste projeto, treebanks de vários idiomas são criados
+com análises sintáticas de sentenças usadas para treinar parsers
+estatísticos. Vide por exemplo
+
+- http://lindat.mff.cuni.cz/services/udpipe/
+- http://spacy.io
+- http://stanza.run
+
+Então digamos que nosso problema seja identificar os verbos que foram
+analisados no corpus contendo objeto direto no corpus [[https://github.com/UniversalDependencies/UD_Portuguese-Bosque/tree/workbench/documents][Bosque]]. Em UD,
+objetos diretos são anotados com a relação =deprel= chamada =obj=. O
+formato CoNLLU é tabular, para cada sentença, cada token é analisado
+em uma linha com 10 campos. o campo =deprel= indica como o token é
+relacionado com seu token 'pai', o campo =head=.
+
+** preparação dos dados
+
+Os dados nos arquivos =.conllu= serão convertidos em um arquivo TSV
+para importação no SQLite. Para isso, vamos usar duas formas, Python e
+[[https://en.wikipedia.org/wiki/AWK][AWK]].
+
+#+begin_src python
+import sys
+import re
+
+with open(sys.argv[1], "r") as file:
+    sent = ""
+    pattern = re.compile("^[0-9]+$")
+    for line in file.readlines():
+        t = line.split("\t")
+        if line.startswith("# sent_id"):
+            sent = line.split(" = ")[1].strip()
+        if len(t) == 10:
+            if pattern.search(t[0]): 
+                print(f"{sent}\t{line}", end="")            
+#+end_src
+
+Salvando este código no =extrair.py=, podemos executar o comando
+abaixo para gerar o arquivo =bosque.tsv=:
+
+#+begin_src bash
+for f in *.conllu; do python extrair.py $f >> bosque.tsv; done
+#+end_src
+
+Usando AWK podemos ter o mesmo resultado de forma mais eficiente, o
+'programa' em AWK seria:
+
+#+begin_src awk
+  BEGIN {
+      OFS = "\t";
+      print "sent","id","form","lemma","pos","xpos","feats","head","deprel","deps","misc"
+  }
+
+  $0 ~ /^# sent_id/ {
+      split($0,a," = ");
+      sent = a[2];
+  }
+
+  $1 ~ /^[0-9]+$/ {
+      print sent,$0
+  }
+#+end_src
+
+E salvando em um arquivo =extract.awk= podemos executar:
+
+#+begin_src bash
+cat *.conllu | awk -F "\t" -f extract.awk > bosque.tsv
+#+end_src
+
+Em ambos os casos conseguimos criar o arquivo =bosque.tsv=, sendo AWK
+bem mais eficiente.
+
+** importando e executando consultas
+
+A importação dos dados:
+
+#+begin_src bash
+  % sqlite3 bosque.db
+  sqlite> .mode tabs
+  sqlite> .import bosque.tsv bosque
+#+end_src
+
+Finalmente, a consulta, notem o uso da mesma tabela duas vezes! Isto
+porque a coluna 'head' tem como valor os identificadores da coluna
+'id', em uma mesma sentença.
+
+#+begin_src sql
+  SELECT a.sent,a.lemma,b.lemma,b.pos
+  FROM bosque a LEFT JOIN bosque b on (a.id = b.head and a.sent = b.sent)
+  WHERE a.pos = "VERB" and b.deprel = "obj";
+#+end_src
+
+
+Com uma consulta um pouco mais elaborada, conseguimos extrair todas as
+[[https://en.wikipedia.org/wiki/Valency_(linguistics)][valências verbais]] identificadas no corpus:
+
+#+begin_src sql
+  SELECT a.sent,a.id,a.lemma,b.id,b.deprel,b.pos,c.id,c.lemma,c.deprel,c.pos
+  FROM
+   bosque a
+    LEFT JOIN bosque b on (a.id = b.head and a.sent = b.sent)
+    LEFT JOIN bosque c on (b.sent = c.sent and c.head = b.id)
+  WHERE
+   a.pos = "VERB" and
+   b.deprel not in ('cc','punct','appos','conj') and
+   c.deprel in ('mark','case','det');
+#+end_src
+
