@@ -110,3 +110,25 @@ Com uma consulta um pouco mais elaborada, conseguimos extrair todas as
    c.deprel in ('mark','case','det');
 #+end_src
 
+Que retorna como resultado (últimas linhas):
+
+| a.sent    | a.id | a.lemma   | b.id | b.deprel   | b.pos | c.id | c.lemma | c.deprel | c.pos |
+|-----------+------+-----------+------+------------+-------+------+---------+----------+-------|
+| ...       |  ... | ...       |  ... | ...        | ...   |  ... | ...     | ...      | ...   |
+| CP1003-10 |    8 | intitular |   11 | obj        | NOUN  |   10 | seu     | det      | DET   |
+| CP1003-10 |    8 | intitular |   11 | obj        | NOUN  |    9 | o       | det      | DET   |
+| CP1003-10 |    8 | intitular |    2 | nsubj      | ADJ   |    1 | o       | det      | DET   |
+| CP1003-10 |   29 | colocar   |   22 | obl        | NOUN  |   20 | em      | case     | ADP   |
+| CP1003-10 |   29 | colocar   |   22 | obl        | NOUN  |   21 | o       | det      | DET   |
+| CP1003-10 |   41 | sujar     |   50 | obl        | NOUN  |   48 | com     | case     | ADP   |
+| CP1003-10 |   41 | sujar     |   50 | obl        | NOUN  |   49 | o       | det      | DET   |
+| CP1003-10 |   44 | encher    |   46 | obj        | NOUN  |   45 | de      | case     | ADP   |
+| CP1003-12 |   20 | quebrar   |    3 | obl        | NOUN  |    1 | a       | case     | ADP   |
+| CP1003-12 |   20 | quebrar   |    3 | obl        | NOUN  |    2 | certo   | det      | DET   |
+| CP1003-12 |   20 | quebrar   |    7 | nsubj:pass | NOUN  |    5 | este    | det      | DET   |
+| CP1003-12 |   22 | levar     |   26 | obl        | NOUN  |   23 | a       | case     | ADP   |
+| CP1003-12 |   22 | levar     |   26 | obl        | NOUN  |   24 | o       | det      | DET   |
+| CP1003-12 |   22 | levar     |   26 | obl        | NOUN  |   25 | seu     | det      | DET   |
+| CP1003-14 |    9 | acontecer |   12 | obj        | NOUN  |   10 | a       | case     | ADP   |
+| CP1003-14 |    9 | acontecer |   12 | obj        | NOUN  |   11 | este    | det      | DET   |
+
