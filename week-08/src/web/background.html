@@ -3,26 +3,54 @@
 <!-- Demonstrates programmatic changes to style -->
 
 <html lang="en">
-    <head>
-        <title>background</title>
-    </head>
-    <body>
-        <button id="red">R</button>
-        <button id="green">G</button>
-        <button id="blue">B</button>
-        <script>
+  <head>
+    <title>background</title>
+  </head>
+  <body>
+    <button id="red">R</button>
+    <button id="green">G</button>
+    <button id="blue">B</button>
+    <input type="text" id="par"/>
 
-            let body = document.querySelector('body');
-            document.querySelector('#red').addEventListener('click', function() {
-                body.style.backgroundColor = 'red';
-            });
-            document.querySelector('#green').addEventListener('click', function() {
-                body.style.backgroundColor = 'green';
-            });
-            document.querySelector('#blue').addEventListener('click', function() {
-                body.style.backgroundColor = 'blue';
-            });
+    <p id="p1">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+      convallis scelerisque quam, vel hendrerit lectus viverra
+      eu. Praesent posuere eget lectus ut faucibus. Etiam eu velit
+      laoreet, gravida lorem in, viverra est. Cras ut purus neque. In
+      porttitor non lorem id lobortis. Mauris gravida metus libero,
+      quis maximus dui porta at. Donec lacinia felis consectetur
+      venenatis scelerisque. Nulla eu nisl sollicitudin, varius velit
+      sit amet, vehicula erat. Curabitur sollicitudin felis sit amet
+      orci mattis, a tempus nulla pulvinar. Aliquam erat volutpat.
+    </p>
+    <p id="p2">
+      Mauris ut dui in eros semper hendrerit. Morbi vel elit mi. Sed
+      sit amet ex non quam dignissim dignissim et vel
+      arcu. Pellentesque eget elementum orci. Morbi ac cursus
+      ex. Pellentesque quis turpis blandit orci dapibus semper sed non
+      nunc. Nulla et dolor nec lacus finibus volutpat. Sed non lorem
+      diam. Donec feugiat interdum interdum. Vivamus et justo in enim
+      blandit fermentum vel at elit. Phasellus eu ante vitae ligula
+      varius aliquet. Etiam id posuere nibh.
+    </p>
 
-        </script>
-    </body>
+
+    <script>
+      document.querySelector('#red').addEventListener('click', function() {
+	  let p = document.querySelector('#par').value;
+	  let b = document.querySelector(p);
+          b.style.backgroundColor = 'red';
+      });
+      document.querySelector('#green').addEventListener('click', function() {
+	  let p = document.querySelector('#par').value;
+	  let b = document.querySelector(p);
+          b.style.backgroundColor = 'green';
+      });
+      document.querySelector('#blue').addEventListener('click', function() {
+	  let p = document.querySelector('#par').value;
+	  let b = document.querySelector(p);
+          b.style.backgroundColor = 'blue';
+      });
+    </script>
+  </body>
 </html>

@@ -103,6 +103,27 @@ Python e SQL, além de HTML, CSS e JavaScript.
 - https://en.wikibooks.org/wiki/C_Programming
 
 
+* Projetos
+
+
+  - contribuir resolvendo algum bug ou adicionando alguma
+    funcionalidade em códigos open-source ja existentes no GitHub.
+
+    - https://github.com/nltk/nltk
+    - https://github.com/EmilStenstrom/conllu/
+      
+  - novo projeto
+
+    - https://github.com/LR-POR/MorphoBr e interface web para consulta
+      dos dados.
+
+    - http://openwordnet-pt.org modernização interface; integração com
+      MorphoBr
+
+    - Uma interface web para visualização das provas da OAB e
+      respostas geradas pelo sistema que fizemos em
+      http://arademaker.github.io/bibliography/jurix-2017.html
+
 * Minicurrículo do(s) Professor(s)
 
 Alexandre é professor adjunto na Escola de Matemática Aplicada da
