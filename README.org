@@ -105,14 +105,14 @@ Python e SQL, além de HTML, CSS e JavaScript.
 
 * Projetos
 
-
   - contribuir resolvendo algum bug ou adicionando alguma
     funcionalidade em códigos open-source ja existentes no GitHub.
 
     - https://github.com/nltk/nltk
     - https://github.com/EmilStenstrom/conllu/
       
-  - novo projeto
+  - novo projeto, tem que ser algo inétido, não pode ser copiar algo
+    da internet...
 
     - https://github.com/LR-POR/MorphoBr e interface web para consulta
       dos dados.
