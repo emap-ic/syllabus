@@ -13,8 +13,9 @@ data Expr
 instance Arbitrary Expr where
   arbitrary =
     oneof
-      [ do x <- arbitrary
-           return (Val x)
+      [ do
+          x <- arbitrary
+          return (Val x)
       , do x <- arbitrary
            y <- arbitrary
            return (Add x y)
