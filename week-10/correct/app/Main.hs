@@ -13,9 +13,7 @@ data Expr
 instance Arbitrary Expr where
   arbitrary =
     oneof
-      [ do
-          x <- arbitrary
-          return (Val x)
+      [ do (Val <$> arbitrary)
       , do x <- arbitrary
            y <- arbitrary
            return (Add x y)
@@ -43,8 +41,13 @@ exec _ s = s
 
 correct e = exec (comp e) [] == [eval e]
 
-prop_reverse :: [Int] -> Bool
-prop_reverse xs = reverse (reverse xs) == xs
+preverse :: [Int] -> Bool
+preverse xs = reverse (reverse xs) == xs
+
+
+primes = filterPrime [2 ..]
+  where
+    filterPrime (p:xs) = p : filterPrime [x | x <- xs, x `mod` p /= 0]
 
 
 main :: IO ()
